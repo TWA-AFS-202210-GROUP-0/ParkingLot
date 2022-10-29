@@ -21,6 +21,17 @@ namespace ParkingLot
             return workingParkingLot.ParkCar(car);
         }
 
+        public List<Ticket> ParkSeveralCars(List<Car> carList)
+        {
+            var ticketList = new List<Ticket>();
+            foreach (var car in carList)
+            {
+                ticketList.Add(workingParkingLot.ParkCar(car));
+            }
+
+            return ticketList;
+        }
+
         public Car FetchCar(Ticket ticket)
         {
             return workingParkingLot.FetchCar(ticket);

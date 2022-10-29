@@ -1,6 +1,7 @@
 namespace ParkingLotTest
 {
     using ParkingLot;
+    using System.Collections.Generic;
     using Xunit;
 
     public class ParkingBoyTest
@@ -30,6 +31,24 @@ namespace ParkingLotTest
             var fetchedCar = parkingBoy.FetchCar(ticket);
             //then
             Assert.Equal(car, fetchedCar);
+        }
+
+        [Fact]
+        public void Should_given_right_car_when_fetch_given_correspoding_ticket_to_parking_boy()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            var car1 = new Car("12345");
+            var car2 = new Car("56789");
+            var carList = new List<Car>();
+            carList.Add(car1);
+            carList.Add(car2);
+            var ticketList = parkingBoy.ParkSeveralCars(carList);
+            //when
+            Car fetchedCar = parkingBoy.FetchCar(ticketList[0]);
+            //then
+            Assert.Equal(car1, fetchedCar);
         }
     }
 }
