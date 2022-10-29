@@ -18,23 +18,25 @@ namespace ParkingLot
         
         public Ticket ParkCar (Car car)
         {
-            return workingParkingLot.ParkCar(car);
+            Ticket ticket = new Ticket(car.CarID);
+            workingParkingLot.ParkCar(car);
+            return ticket;
         }
 
         public List<Ticket> ParkSeveralCars(List<Car> carList)
         {
-            var ticketList = new List<Ticket>();
-            foreach (var car in carList)
+            var ticketList = (from Car car in carList
+                              select new Ticket(car.CarID)).ToList();
+            foreach (Car car in carList)
             {
-                ticketList.Add(workingParkingLot.ParkCar(car));
+                workingParkingLot.ParkCar(car);
             }
-
             return ticketList;
         }
 
         public Car FetchCar(Ticket ticket)
         {
-            return workingParkingLot.FetchCar(ticket);
+            return workingParkingLot.FetchCar(ticket.CarID);
         }
     }
 }

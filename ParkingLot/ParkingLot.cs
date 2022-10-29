@@ -7,17 +7,15 @@
     {
         private Dictionary<string, Car> parkedCars = new Dictionary<string, Car>();
 
-        public Ticket ParkCar(Car car)
+        public void ParkCar(Car car)
         {
-            Ticket ticket = new Ticket(car.CarID);
             parkedCars.Add(car.CarID, car);
-            return ticket;
         }
         
-        public Car FetchCar(Ticket ticket)
+        public Car FetchCar(string carID)
         {
-            Car feachedCar = parkedCars[ticket.CarID];
-            parkedCars.Remove(ticket.CarID);
+            Car feachedCar = parkedCars[carID];
+            parkedCars.Remove(carID);
             return feachedCar;
         }
 
