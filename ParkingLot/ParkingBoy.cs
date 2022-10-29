@@ -47,6 +47,11 @@ namespace ParkingLot
 
         public Car FetchCar(Ticket ticket)
         {
+            if (ticket == null)
+            {
+                throw new NoTicketException();
+            }
+            
             if (parkedTicketList.Contains(ticket))
             {
                 parkedTicketList.Remove(ticket);
