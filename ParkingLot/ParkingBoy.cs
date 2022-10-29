@@ -47,18 +47,22 @@ namespace ParkingLot
 
         public Car FetchCar(Ticket ticket)
         {
+            IsValidTicket(ticket);
+            parkedTicketList.Remove(ticket);
+            return workingParkingLot.FetchCar(ticket.CarID);
+        }
+
+        private void IsValidTicket(Ticket ticket)
+        {
             if (ticket == null)
             {
                 throw new NoTicketException();
             }
-            
-            if (parkedTicketList.Contains(ticket))
+
+            if (!parkedTicketList.Contains(ticket))
             {
-                parkedTicketList.Remove(ticket);
-                return workingParkingLot.FetchCar(ticket.CarID);
+                throw new WrongTicketException();
             }
-            throw new WrongTicketException();
-            
         }
     }
 }
