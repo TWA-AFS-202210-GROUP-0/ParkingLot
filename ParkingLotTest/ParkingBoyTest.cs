@@ -55,11 +55,13 @@ namespace ParkingLotTest
         public void Should_throw_exception_when_fetch_given_wrong_ticket()
         {
             //given
-           
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            var wrongTicket = new Ticket("12345");
             //when
-            
             //then
-            
+            Assert.Throws<WrongTicketException>(() => parkingBoy.FetchCar(wrongTicket));
+
         }
     }
 }
