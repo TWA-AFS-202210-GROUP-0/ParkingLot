@@ -110,6 +110,30 @@ namespace ParkingLotTest
 
         }
 
-        
+        [Fact]
+        public void Should_return_list_contains_null_when_park_2_cars_given_a_parking_lot_capicity_10_has_parked_9_cars()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            for (int carIndex = 0; carIndex < 9; carIndex++)
+            {
+                string carID = carIndex.ToString();
+                parkingBoy.ParkCar(new Car(carID));
+            }
+            var car10 = new Car("10");
+            var car11 = new Car("11");
+            var carList = new List<Car>();
+            carList.Add(car10);
+            carList.Add(car11);
+            //when
+            var ticketList = parkingBoy.ParkSeveralCars(carList);
+            //then
+            Assert.Equal(car10, parkingBoy.FetchCar(ticketList[0]));
+            Assert.Null(ticketList[1]);
+
+        }
+
+
     }
 }
