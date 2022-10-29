@@ -23,22 +23,10 @@ namespace ParkingLot
             {
                 throw new WrongCarException();
             }
-
-            try
-            {
-                workingParkingLot.ParkCar(car);
-                Ticket ticket = new Ticket(car.CarID);
-                parkedTicketList.Add(ticket);
-                return ticket;
-
-            }
-            catch (NoPositionException e)
-            {
-                return null;
-            }
-
-
-            
+            workingParkingLot.ParkCar(car);
+            Ticket ticket = new Ticket(car.CarID);
+            parkedTicketList.Add(ticket);
+            return ticket;
         }
 
         public List<Ticket> ParkSeveralCars(List<Car> carList)
@@ -75,21 +63,21 @@ namespace ParkingLot
 
         public Car FetchCar(Ticket ticket)
         {
-            IsValidTicket(ticket);
+            CheckValidTicket(ticket);
             parkedTicketList.Remove(ticket);
             return workingParkingLot.FetchCar(ticket.CarID);
         }
 
-        private void IsValidTicket(Ticket ticket)
+        private void CheckValidTicket(Ticket ticket)
         {
             if (ticket == null)
             {
-                throw new NoTicketException();
+                throw new NoTicketException("Please provide your parking ticket.");
             }
 
             if (!parkedTicketList.Contains(ticket))
             {
-                throw new WrongTicketException();
+                throw new WrongTicketException("Unrecognized parking ticket.");
             }
         }
     }

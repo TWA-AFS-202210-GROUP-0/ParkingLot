@@ -8,5 +8,8 @@ namespace ParkingLot
 {
     public class NoPositionException : Exception
     {
+        public NoPositionException(string message) : base(message)
+        {
+        }
     }
 }

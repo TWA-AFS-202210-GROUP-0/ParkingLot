@@ -65,19 +65,19 @@ namespace ParkingLotTest
         }
 
         [Fact]
-        public void Should_throw_exception_when_fetch_given_no_ticket()
+        public void Should_throw_exception_with_right_message_when_fetch_given_no_ticket()
         {
             //given
             var parkingLot = new ParkingLot();
             var parkingBoy = new ParkingBoy(parkingLot);
             //when
             //then
-            Assert.Throws<NoTicketException>(() => parkingBoy.FetchCar(null));
-
+            NoTicketException exception = Assert.Throws<NoTicketException>(() => parkingBoy.FetchCar(null));
+            Assert.Equal("Please provide your parking ticket.", exception.Message);
         }
 
         [Fact]
-        public void Should_throw_exception_when_fetch_given_used_ticket()
+        public void Should_throw_exception_with_right_message_when_fetch_given_used_ticket()
         {
             //given
             var parkingLot = new ParkingLot();
@@ -87,12 +87,12 @@ namespace ParkingLotTest
             parkingBoy.FetchCar(ticket);
             //when
             //then
-            Assert.Throws<WrongTicketException>(() => parkingBoy.FetchCar(ticket));
-
+            WrongTicketException exception = Assert.Throws<WrongTicketException>(() => parkingBoy.FetchCar(ticket));
+            Assert.Equal("Unrecognized parking ticket.", exception.Message);
         }
 
         [Fact]
-        public void Should_return_null_when_park_given_a_parking_lot_capicity_10_has_parked_10_cars()
+        public void Should_throw_exception_with_right_message_when_park_given_a_parking_lot_capicity_10_has_parked_10_cars()
         {
             //given
             var parkingLot = new ParkingLot();
@@ -104,9 +104,8 @@ namespace ParkingLotTest
             }
             var car = new Car("11");
             //when
-            var ticket = parkingBoy.ParkCar(car);
-            //then
-            Assert.Equal(null, ticket);
+            NoPositionException exception = Assert.Throws<NoPositionException>(() => parkingBoy.ParkCar(car));
+            Assert.Equal("Not enough position.", exception.Message);
 
         }
 

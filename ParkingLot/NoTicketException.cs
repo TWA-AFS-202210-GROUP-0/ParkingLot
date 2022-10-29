@@ -8,5 +8,8 @@ namespace ParkingLot
 {
     public class NoTicketException : Exception
     {
+        public NoTicketException(string message) : base(message)
+        {
+        }
     }
 }

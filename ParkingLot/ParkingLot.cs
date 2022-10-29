@@ -16,12 +16,12 @@
 
         public void ParkCar(Car car)
         {
-            ValidCar(car);
+            CheckValidCar(car);
             CheckCapicity();
             parkedCars.Add(car.CarID, car);
         }
 
-        private void ValidCar(Car car)
+        private void CheckValidCar(Car car)
         {
             if (parkedCars.Values.Contains(car))
             {
@@ -32,7 +32,7 @@
         {
             if (parkingCapicity - parkedCars.Count == 0)
             {
-                throw new NoPositionException();
+                throw new NoPositionException("Not enough position.");
             }
         }
 
