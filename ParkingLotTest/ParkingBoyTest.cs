@@ -75,5 +75,41 @@ namespace ParkingLotTest
             Assert.Throws<NoTicketException>(() => parkingBoy.FetchCar(null));
 
         }
+
+        [Fact]
+        public void Should_throw_exception_when_fetch_given_used_ticket()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            var car = new Car("12345");
+            var ticket = parkingBoy.ParkCar(car);
+            parkingBoy.FetchCar(ticket);
+            //when
+            //then
+            Assert.Throws<WrongTicketException>(() => parkingBoy.FetchCar(ticket));
+
+        }
+
+        [Fact]
+        public void Should_return_null_when_park_given_a_parking_lot_capicity_10_has_parked_10_cars()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            for (int carIndex = 0; carIndex < 10; carIndex++)
+            {
+                string carID = carIndex.ToString();
+                parkingBoy.ParkCar(new Car(carID));
+            }
+            var car = new Car("11");
+            //when
+            var ticket = parkingBoy.ParkCar(car);
+            //then
+            Assert.Equal(null, ticket);
+
+        }
+
+        
     }
 }

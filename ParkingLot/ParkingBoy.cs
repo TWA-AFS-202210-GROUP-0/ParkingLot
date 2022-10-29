@@ -19,10 +19,21 @@ namespace ParkingLot
         
         public Ticket ParkCar (Car car)
         {
-            Ticket ticket = new Ticket(car.CarID);
-            parkedTicketList.Add(ticket);
-            workingParkingLot.ParkCar(car);
-            return ticket;
+            try
+            {
+                workingParkingLot.ParkCar(car);
+                Ticket ticket = new Ticket(car.CarID);
+                parkedTicketList.Add(ticket);
+                return ticket;
+
+            }
+            catch (NoPositionException e)
+            {
+                return null;
+            }
+
+
+            
         }
 
         public List<Ticket> ParkSeveralCars(List<Car> carList)
@@ -32,14 +43,17 @@ namespace ParkingLot
             var ticketList = new List<Ticket>();
             foreach (Car car in carList)
             {
-                Ticket ticketWhoseParking = new Ticket(car.CarID);
-                ticketList.Add(ticketWhoseParking);
-                parkedTicketList.Add(ticketWhoseParking);
-            }
-
-            foreach (Car car in carList)
-            {
-                workingParkingLot.ParkCar(car);
+                try
+                {
+                    workingParkingLot.ParkCar(car);
+                    Ticket ticketWhoseParking = new Ticket(car.CarID);
+                    ticketList.Add(ticketWhoseParking);
+                    parkedTicketList.Add(ticketWhoseParking);
+                }
+                catch (NoPositionException e)
+                {
+                    ticketList.Add(null);
+                }
             }
 
             return ticketList;
