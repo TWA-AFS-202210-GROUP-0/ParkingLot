@@ -17,5 +17,19 @@ namespace ParkingLotTest
             //then
             Assert.Equal(car.CarID, ticket.CarID);
         }
+
+        [Fact]
+        public void Should_given_same_car_when_fetch_car_given_ticket_to_parking_boy()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            var car = new Car("12345");
+            var ticket = parkingBoy.ParkCar(car);
+            //when
+            var fetchedCar = parkingBoy.FetchCar(ticket);
+            //then
+            Assert.Equal(car, fetchedCar);
+        }
     }
 }

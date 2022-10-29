@@ -18,8 +18,12 @@ namespace ParkingLot
         
         public Ticket ParkCar (Car car)
         {
-            Ticket ticket = new Ticket(car.CarID);
-            return ticket;
+            return workingParkingLot.ParkCar(car);
+        }
+
+        public Car FetchCar(Ticket ticket)
+        {
+            return workingParkingLot.FetchCar(ticket);
         }
     }
 }
