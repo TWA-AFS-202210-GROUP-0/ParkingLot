@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ParkingLot
     {
@@ -15,10 +16,18 @@
 
         public void ParkCar(Car car)
         {
+            ValidCar(car);
             CheckCapicity();
             parkedCars.Add(car.CarID, car);
         }
 
+        private void ValidCar(Car car)
+        {
+            if (parkedCars.Values.Contains(car))
+            {
+                throw new WrongCarException();
+            }
+        }
         private void CheckCapicity()
         {
             if (parkingCapicity - parkedCars.Count == 0)

@@ -19,6 +19,11 @@ namespace ParkingLot
         
         public Ticket ParkCar (Car car)
         {
+            if (car == null)
+            {
+                throw new WrongCarException();
+            }
+
             try
             {
                 workingParkingLot.ParkCar(car);
@@ -45,12 +50,21 @@ namespace ParkingLot
             {
                 try
                 {
+                    if (car == null)
+                    {
+                        throw new WrongCarException();
+                    }
+
                     workingParkingLot.ParkCar(car);
                     Ticket ticketWhoseParking = new Ticket(car.CarID);
                     ticketList.Add(ticketWhoseParking);
                     parkedTicketList.Add(ticketWhoseParking);
                 }
                 catch (NoPositionException e)
+                {
+                    ticketList.Add(null);
+                }
+                catch (WrongCarException e)
                 {
                     ticketList.Add(null);
                 }

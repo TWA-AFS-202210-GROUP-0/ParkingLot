@@ -131,9 +131,21 @@ namespace ParkingLotTest
             //then
             Assert.Equal(car10, parkingBoy.FetchCar(ticketList[0]));
             Assert.Null(ticketList[1]);
-
         }
 
+        [Fact]
+        public void Should_throw_exception_when_park_given_null_car_or_parked_car()
+        {
+            //given
+            var parkingLot = new ParkingLot();
+            var parkingBoy = new ParkingBoy(parkingLot);
+            var car = new Car("12345");
+            parkingBoy.ParkCar(car);
+            //when
+            //then
+            Assert.Throws<WrongCarException>(() => parkingBoy.ParkCar(null));
+            Assert.Throws<WrongCarException>(() => parkingBoy.ParkCar(car));
 
+        }
     }
 }
