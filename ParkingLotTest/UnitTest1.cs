@@ -1,6 +1,7 @@
 namespace ParkingLotTest
 {
     using ParkingLot;
+    using System;
     using System.Collections.Generic;
     using Xunit;
 
@@ -41,35 +42,52 @@ namespace ParkingLotTest
         }
 
         [Fact]
-        public void Should_return_no_car_when_customer_give_the_wrong_ticket_or_no_given_a_ticket()
+        public void Should_return_no_car_given_customer_give_the_wrong_ticket_when_fetch_car()
+        {
+            // given
+            Customer customer = new Customer(1);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(customer);
+            ParkBoy parkBoy = new ParkBoy();
+            parkBoy.ParkCar(customers);
+            customer.TicketID = 2;
+            // when
+            var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.FetchCar(customer));
+            // then
+            Assert.Equal("Unrecognized parking ticket.", exeception.Message);
+        }
+
+        [Fact]
+        public void Should_return_no_car_given_customer_no_give_a_ticket_when_fetch_car()
         {
             // given
             Customer customer = new Customer(1);
             List<Customer> customers = new List<Customer>();
             customers.Add(new Customer(1));
             ParkBoy parkBoy = new ParkBoy();
-
-            // when do not park car and fetch car
-            var res = parkBoy.FetchCar(customer);
+            parkBoy.ParkCar(customers);
+            customer.HasTicket = false;
+            // when
+            var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.FetchCar(customer));
             // then
-            Assert.False(res);
+            Assert.Equal("Please provide your parking ticket.", exeception.Message);
         }
 
         [Fact]
-        public void Should_return_no_car_when_customer_give_the_ticket_that_be_used()
+        public void Should_return_no_car_given_customer_give_the_ticket_that_be_used_when_fetch_car()
         {
             // given
             Customer customer = new Customer(1);
             List<Customer> customers = new List<Customer>();
-            customers.Add(new Customer(1));
+            customers.Add(customer);
             ParkBoy parkBoy = new ParkBoy();
             var tickets = parkBoy.ParkCar(customers);
             tickets[0].IsValid = false;
 
             // when
-            var res = parkBoy.FetchCar(customer);
+            var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.FetchCar(customer));
             // then
-            Assert.False(res);
+            Assert.Equal("Unrecognized parking ticket.", exeception.Message);
         }
 
         [Fact]
@@ -84,12 +102,29 @@ namespace ParkingLotTest
 
             ParkBoy parkBoy = new ParkBoy();
             parkBoy.ParkLotCapacity = 2;
-            parkBoy.ParkCar(customers);
+            // when
+            var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.ParkCar(customers));
+            // then
+            Assert.Equal("Not enough position.", exeception.Message);
+        }
+
+        [Fact]
+        public void Should_return_not_enough_position_message_given_without_enough_position_when_fetch_car()
+        {
+            // given
+            Customer customer = new Customer(3);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(new Customer(1));
+            customers.Add(new Customer(2));
+            customers.Add(customer);
+
+            ParkBoy parkBoy = new ParkBoy();
+            parkBoy.ParkLotCapacity = 2;
 
             // when
-            var res = parkBoy.FetchCar(customer);
+            var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.ParkCar(customers));
             // then
-            Assert.False(res);
+            Assert.Equal("Not enough position.", exeception.Message);
         }
     }
 }

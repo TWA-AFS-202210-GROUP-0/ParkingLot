@@ -18,33 +18,47 @@
 
         public List<Ticket> ParkCar(List<Customer> customers)
         {
-            this.Customers = customers;
             foreach (var customer in customers)
             {
-                // my system gererate the ticketID === carID
+                if (Tickets.Any(t => t.Id == customer.CarID) || customer == null)
+                {
+                    continue;
+                }
+
+                // my system just gererate the ticketID === carID
                 Tickets.Add(new Ticket(customer.CarID, true));
                 customer.TicketID = customer.CarID;
                 customer.HasTicket = true;
+
                 if (Tickets.Count >= ParkLotCapacity)
                 {
-                    break;
+                    throw new ParkingLotException("Not enough position.");
                 }
             }
 
+            this.Customers = customers;
             return Tickets;
         }
 
         public bool FetchCar(Customer customer)
         {
-            try
+            if (!customer.HasTicket)
             {
-                var ticket = Tickets.Single(t => t.Id == customer.CarID);
-                return ticket.IsValid;
+                throw new ParkingLotException("Please provide your parking ticket.");
             }
-            catch (Exception e)
+
+            if (!Tickets.Any(t => t.Id == customer.TicketID))
             {
-                return false;
+                throw new ParkingLotException("Unrecognized parking ticket.");
             }
+
+            var ticket = Tickets.Single(t => t.Id == customer.TicketID);
+            if (!ticket.IsValid)
+            {
+                throw new ParkingLotException("Unrecognized parking ticket.");
+            }
+
+            return true;
         }
     }
 }
