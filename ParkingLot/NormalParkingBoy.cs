@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParkingLot
 {
-    public class NormalParkingBoy
+    public class NormalParkingBoy : ParkingBoy
     {
-        public string ParkCar(Car car)
+        public override int SelectParkingLot()
         {
-            return Guid.NewGuid().ToString();
-        }
-
-        public List<string> ParkCars(List<Car> cars)
-        {
-            return new List<string>();
+            return WorkingParkingLots.FindIndex(e => e.GetSpaces() > 0);
         }
     }
 }

@@ -14,19 +14,33 @@ namespace ParkingLot
 
         public string Ticket { get; set; } = null;
 
-        public void HandOverCar()
+        public string HandOverCar(IParkingBoy parkingBoy)
         {
-            Ticket = string.Empty;
+            try
+            {
+                this.Ticket = parkingBoy.ParkCar(this.Car);
+                return $"Parked car with ticket = {this.Ticket}";
+            }
+            catch (Exception ex)
+            { return ex.Message; }
         }
 
-        public Car ShowTicketGetCar()
+        public string ShowTicketGetCar(IParkingBoy parkingBoy)
         {
-            return new Car();
-        }
+            try
+            {
+                var fetchedCar = parkingBoy.FetchCar(this.Ticket);
+                if (fetchedCar.VehicleId != this.Car.VehicleId)
+                {
+                    throw new Exception("Fetched wrong car");
+                }
 
-        public bool isMyCar(string vehicleId)
-        {
-            return vehicleId == this.Car.VehicleId;
+                return "Fetched my car";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }
