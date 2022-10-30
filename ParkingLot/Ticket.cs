@@ -8,14 +8,13 @@ namespace ParkingLot
 {
     public class Ticket
     {
-        // using the carID
-        private int id;
-
-        public Ticket(int id)
+        public Ticket(int id, bool isValid)
         {
-            this.id = id;
+            this.Id = id;
+            this.IsValid = isValid;
         }
 
-        public int Id { get => id; set => id = value; }
+        public int Id { get; set; }
+        public bool IsValid { get; set; }
     }
 }

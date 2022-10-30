@@ -49,6 +49,23 @@ namespace ParkingLotTest
             customers.Add(new Customer(1));
             ParkBoy parkBoy = new ParkBoy();
 
+            // when do not park car and fetch car
+            var res = parkBoy.FetchCar(customer);
+            // then
+            Assert.False(res);
+        }
+
+        [Fact]
+        public void Should_return_no_car_when_customer_give_the_ticket_that_be_used()
+        {
+            // given
+            Customer customer = new Customer(1);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(new Customer(1));
+            ParkBoy parkBoy = new ParkBoy();
+            var tickets = parkBoy.ParkCar(customers);
+            tickets[0].IsValid = false;
+
             // when
             var res = parkBoy.FetchCar(customer);
             // then

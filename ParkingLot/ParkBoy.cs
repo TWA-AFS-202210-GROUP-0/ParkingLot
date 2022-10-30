@@ -21,7 +21,8 @@
             List<Ticket> newTickets = new List<Ticket>();
             foreach (var customer in customers)
             {
-                newTickets.Add(new Ticket(customer.CarID));
+                // my system gererate the ticketID === carID
+                newTickets.Add(new Ticket(customer.CarID, true));
                 customer.TicketID = customer.CarID;
                 customer.HasTicket = true;
             }
@@ -32,11 +33,12 @@
 
         public bool FetchCar(Customer customer)
         {
-            if (tickets.Any(s => s.Id == customer.CarID))
+            try
             {
-                return true;
+                var ticket = tickets.Single(t => t.Id == customer.CarID);
+                return ticket.IsValid;
             }
-            else
+            catch (Exception e)
             {
                 return false;
             }
