@@ -56,6 +56,7 @@ namespace ParkingLot
             {
                 if (keyValuePair.Key == ticket)
                 {
+                    carList.Remove(keyValuePair.Key);
                     return keyValuePair.Value;
                 }
             }
