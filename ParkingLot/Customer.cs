@@ -19,9 +19,14 @@ namespace ParkingLot
             Ticket = string.Empty;
         }
 
-        public bool FetchCar()
+        public Car ShowTicketGetCar()
         {
-            return true;
+            return new Car();
+        }
+
+        public bool isMyCar(string vehicleId)
+        {
+            return vehicleId == this.Car.VehicleId;
         }
     }
 }
