@@ -86,5 +86,25 @@ namespace ParkingLotTest
             // then
             Assert.Null(parkedCar);
         }
+
+        [Fact]
+        public void Should_NOT_get_Car_when_park_cars_given_parking_lot_is_at_capacity()
+        {
+            // given
+            Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
+            Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
+            Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
+            ParkingLot parkingLot = new ParkingLot(2);
+            var ticket1 = parkingLot.Park(car1);
+            var ticket2 = parkingLot.Park(car2);
+            Assert.NotNull(ticket1);
+            Assert.NotNull(ticket2);
+
+            // when
+            var ticket3 = parkingLot.Park(car3);
+
+            // then
+            Assert.Null(ticket3);
+        }
     }
 }
