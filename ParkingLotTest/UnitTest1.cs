@@ -160,8 +160,8 @@ namespace ParkingLotTest
             Customer customer = new Customer(3);
             List<Customer> customers = new List<Customer>();
             customers.Add(new Customer(1));
-            customers.Add(customer);
             customers.Add(new Customer(2));
+            customers.Add(customer);
 
             ParkBoy parkBoy = new SmartParkBoy();
             List<ParkLot> parkLot = new List<ParkLot>();
