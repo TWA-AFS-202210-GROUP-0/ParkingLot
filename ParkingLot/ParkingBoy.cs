@@ -35,10 +35,7 @@ namespace ParkingLot
                 throw new NoPositionException("Not enough position.");
             }
 
-            availableParkingLot.ParkCar(car);
-            Ticket ticket = new Ticket(car.CarID);
-            parkedTicketList.Add(ticket);
-            return ticket;
+            return ParkCarInSpecificParkingLot(car, availableParkingLot);
         }
 
         protected static void CheckNotNullCar(Car car)
@@ -65,9 +62,7 @@ namespace ParkingLot
                         throw new NoPositionException("Not enough position.");
                     }
 
-                    availableParkingLot.ParkCar(car);
-                    Ticket ticketWhoseParking = new Ticket(car.CarID);
-                    parkedTicketList.Add(ticketWhoseParking);
+                    Ticket ticketWhoseParking = ParkCarInSpecificParkingLot(car, availableParkingLot);
                     ticketList.Add(ticketWhoseParking);
                 }
                 catch (NoPositionException e)
@@ -81,6 +76,14 @@ namespace ParkingLot
             }
 
             return ticketList;
+        }
+
+        protected Ticket ParkCarInSpecificParkingLot(Car car, ParkingLot availableParkingLot)
+        {
+            availableParkingLot.ParkCar(car);
+            Ticket ticketWhoseParking = new Ticket(car.CarID);
+            parkedTicketList.Add(ticketWhoseParking);
+            return ticketWhoseParking;
         }
 
         public Car FetchCar(Ticket ticket)

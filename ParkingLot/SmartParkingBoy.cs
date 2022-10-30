@@ -24,10 +24,9 @@ namespace ParkingLot
                 throw new NoPositionException("Not enough position.");
             }
 
-            availableParkingLot.ParkCar(car);
-            Ticket ticket = new Ticket(car.CarID);
-            parkedTicketList.Add(ticket);
-            return ticket;
+
+            return ParkCarInSpecificParkingLot(car, availableParkingLot);
+
         }
 
         public override List<Ticket> ParkSeveralCars(List<Car> carList)
@@ -45,10 +44,8 @@ namespace ParkingLot
                         throw new NoPositionException("Not enough position.");
                     }
 
-                    availableParkingLot.ParkCar(car);
-                    Ticket ticketWhoseParking = new Ticket(car.CarID);
+                    Ticket ticketWhoseParking = ParkCarInSpecificParkingLot(car, availableParkingLot);
                     ticketList.Add(ticketWhoseParking);
-                    parkedTicketList.Add(ticketWhoseParking);
                 }
                 catch (NoPositionException e)
                 {
