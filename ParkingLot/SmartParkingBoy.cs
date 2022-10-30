@@ -63,7 +63,7 @@ namespace ParkingLot
             return cars;
         }
 
-        public virtual string FetchOneCar(Ticket ticket)
+        public override string FetchOneCar(Ticket ticket)
         {
             if (ticket != null)
             {
