@@ -23,5 +23,20 @@ namespace ParkingLotTest
             // then
             Assert.Equal(typeof(Ticket), ticket.GetType());
         }
+
+        [Fact]
+        public void Shoule_return_car_when_parkingBoy_get_a_volid_ticket_given_a_car_park_in_a_SingleParkingLot_managed_by_a_parkingBoy()
+        {
+            // given
+            ParkingBoy parkingBoy = new ParkingBoy();
+            Car car = new Car();
+            SingleParkingLot parkingLot = new SingleParkingLot();
+            parkingBoy.Manage(parkingLot);
+            var ticket = parkingBoy.Park(car);
+            // when
+            var fetchedCar = parkingBoy.Fetch(ticket);
+            // then
+            Assert.Equal(car, fetchedCar);
+        }
     }
 }
