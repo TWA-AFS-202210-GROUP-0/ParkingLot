@@ -33,14 +33,15 @@
 
         public Car Fetch(Ticket ticket)
         {
-            if (!ValidateTicket(ticket)) { return null; }
-            this.carInfo.Remove(ticket.Car);
+            if (!IsTicketValid(ticket)) { return null; }
+            carInfo.Remove(ticket.Car);
+            ticket.IsUsed = true;
             return ticket.Car;
         }
 
-        private bool ValidateTicket(Ticket ticket)
+        private bool IsTicketValid(Ticket ticket)
         {
-            return ticket?.Id == carInfo[ticket?.Car];
+            return !ticket.IsUsed && ticket?.Id == carInfo[ticket?.Car];
         }
     }
 }

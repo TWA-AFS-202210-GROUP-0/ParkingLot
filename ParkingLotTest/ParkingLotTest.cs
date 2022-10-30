@@ -68,5 +68,23 @@ namespace ParkingLotTest
             // then
             Assert.Null(parkedCar);
         }
+
+        [Fact]
+        public void Should_NOT_get_CAR_when_park_cars_given_a_used_ticket()
+        {
+            // given
+            Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
+            ParkingLot parkingLot = new ParkingLot();
+            var ticket = parkingLot.Park(car);
+            var parkedCar = parkingLot.Fetch(ticket);
+            Assert.Equal(parkedCar, car);
+            Assert.True(ticket.IsUsed);
+
+            // when
+            parkedCar = parkingLot.Fetch(ticket);
+
+            // then
+            Assert.Null(parkedCar);
+        }
     }
 }
