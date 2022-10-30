@@ -58,20 +58,20 @@ namespace ParkingLotTest
             Assert.Equal(tickets[0].Car, car1);
         }
 
-        //[Fact]
-        //public void Should_NOT_get_CAR_when_park_cars_given_a_wrong_ticket()
-        //{
-        //    // given
-        //    Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-        //    ParkingLot parkingLot = new ParkingLot("parkinglot");
-        //    parkingLot.BeParked(car);
-        //    var ticket = new Ticket() { Car = car };
+        [Fact]
+        public void Should_NOT_get_CAR_when_park_cars_given_a_wrong_ticket()
+        {
+            // given
+            Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
+            ParkingBoy parkingBoy = new ParkingBoy(1, 2);
+            parkingBoy.Park(car);
+            var ticket = new Ticket() { Car = car, ParkingLot = "ParkingLot1" };
 
-        //    // given
-        //    // then
-        //    Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeFetched(ticket); });
-        //    Assert.Equal("Unrecognized parking ticket.", ex.Message);
-        //}
+            // given
+            // then
+            Exception ex = Assert.Throws<Exception>(() => { parkingBoy.Fetch(ticket); });
+            Assert.Equal("Unrecognized parking ticket.", ex.Message);
+        }
 
         //[Fact]
         //public void Should_NOT_get_CAR_when_park_cars_given_a_used_ticket()
