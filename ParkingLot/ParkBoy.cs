@@ -14,6 +14,7 @@
 
         public List<Customer> Customers { get; set; } = new List<Customer>();
 
+        // any par lot would just add the parkLotCapacity
         public int ParkLotCapacity { get; set; } = 10;
 
         public List<Ticket> ParkCar(List<Customer> customers)
