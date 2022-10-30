@@ -12,10 +12,10 @@ namespace ParkingLotTest
         {
             // given
             Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-            ParkingLot parkingLot = new ParkingLot();
+            ParkingLot parkingLot = new ParkingLot("parkinglot");
 
             // when
-            var ticket = parkingLot.Park(car);
+            var ticket = parkingLot.BeParked(car);
 
             // then
             Assert.Equal(car, ticket.Car);
@@ -26,11 +26,11 @@ namespace ParkingLotTest
         {
             // given
             Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-            ParkingLot parkingLot = new ParkingLot();
-            var ticket = parkingLot.Park(car);
+            ParkingLot parkingLot = new ParkingLot("parkinglot");
+            var ticket = parkingLot.BeParked(car);
 
             // when
-            var parkedCar = parkingLot.Fetch(ticket);
+            var parkedCar = parkingLot.BeFetched(ticket);
 
             // then
             Assert.Equal(car.Name, parkedCar.Name);
@@ -45,10 +45,10 @@ namespace ParkingLotTest
             Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
             Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
             List<Car> cars = new List<Car>() { car1, car2, car3 };
-            ParkingLot parkingLot = new ParkingLot();
+            ParkingLot parkingLot = new ParkingLot("parkinglot");
 
             // when
-            var tickets = parkingLot.Park(cars);
+            var tickets = parkingLot.BeParked(cars);
 
             // then
             Assert.Equal(tickets[0].Car, car1);
@@ -59,13 +59,13 @@ namespace ParkingLotTest
         {
             // given
             Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-            ParkingLot parkingLot = new ParkingLot();
-            parkingLot.Park(car);
+            ParkingLot parkingLot = new ParkingLot("parkinglot");
+            parkingLot.BeParked(car);
             var ticket = new Ticket() { Car = car };
 
             // given
             // then
-            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Fetch(ticket); });
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeFetched(ticket); });
             Assert.Equal("Unrecognized parking ticket.", ex.Message);
         }
 
@@ -74,15 +74,15 @@ namespace ParkingLotTest
         {
             // given
             Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-            ParkingLot parkingLot = new ParkingLot();
-            var ticket = parkingLot.Park(car);
-            var parkedCar = parkingLot.Fetch(ticket);
+            ParkingLot parkingLot = new ParkingLot("parkinglot");
+            var ticket = parkingLot.BeParked(car);
+            var parkedCar = parkingLot.BeFetched(ticket);
             Assert.Equal(parkedCar, car);
             Assert.True(ticket.IsUsed);
 
-            // given
+            // when
             // then
-            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Fetch(ticket); });
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeFetched(ticket); });
             Assert.Equal("Unrecognized parking ticket.", ex.Message);
         }
 
@@ -93,15 +93,15 @@ namespace ParkingLotTest
             Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
             Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
             Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
-            ParkingLot parkingLot = new ParkingLot(2);
-            var ticket1 = parkingLot.Park(car1);
-            var ticket2 = parkingLot.Park(car2);
+            ParkingLot parkingLot = new ParkingLot("parkinglot", 2);
+            var ticket1 = parkingLot.BeParked(car1);
+            var ticket2 = parkingLot.BeParked(car2);
             Assert.NotNull(ticket1);
             Assert.NotNull(ticket2);
 
             // when
             // then
-            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Park(car3); });
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeParked(car3); });
             Assert.Equal("Not enough position.", ex.Message);
         }
 
@@ -113,12 +113,11 @@ namespace ParkingLotTest
             Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
             Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
             List<Car> cars = new List<Car>() { car1, car2, car3 };
-            ParkingLot parkingLot = new ParkingLot(2);
+            ParkingLot parkingLot = new ParkingLot("parkinglot", 2);
 
             // when
-            // when
             // then
-            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Park(cars); });
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeParked(cars); });
             Assert.Equal("Not enough position.", ex.Message);
         }
 
@@ -127,13 +126,13 @@ namespace ParkingLotTest
         {
             // given
             Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-            ParkingLot parkingLot = new ParkingLot();
-            parkingLot.Park(car);
+            ParkingLot parkingLot = new ParkingLot("parkinglot");
+            parkingLot.BeParked(car);
             var ticket = new Ticket() { Car = car };
 
-            // given
+            // when
             // then
-            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Fetch(null); });
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeFetched(null); });
             Assert.Equal("Please provide your parking ticket.", ex.Message);
         }
     }

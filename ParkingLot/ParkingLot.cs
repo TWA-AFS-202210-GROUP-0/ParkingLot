@@ -9,18 +9,21 @@
         private const int DEFAULT_CAPACITY = 10;
         private Dictionary<Car, Guid> carInfo = new Dictionary<Car, Guid>();
         private int capacity;
+        private string name;
 
-        public ParkingLot()
+        public ParkingLot(string name)
         {
+            this.name = name;
             capacity = DEFAULT_CAPACITY;
         }
 
-        public ParkingLot(int limit)
+        public ParkingLot(string name, int limit)
         {
+            this.name = name;
             capacity = limit;
         }
 
-        public Ticket Park(Car car)
+        public Ticket BeParked(Car car)
         {
             var newId = Guid.NewGuid();
             if (IsAtCapacity())
@@ -33,12 +36,13 @@
             {
                 Id = newId,
                 Car = car,
+                ParkingLot = name,
             };
         }
 
-        public List<Ticket> Park(List<Car> cars) => cars.Select(car => Park(car)).ToList();
+        public List<Ticket> BeParked(List<Car> cars) => cars.Select(car => BeParked(car)).ToList();
 
-        public Car Fetch(Ticket ticket)
+        public Car BeFetched(Ticket ticket)
         {
             if (ticket == null) { throw new Exception("Please provide your parking ticket."); }
             if (!IsTicketValid(ticket)) { throw new Exception("Unrecognized parking ticket."); }
@@ -47,14 +51,14 @@
             return ticket.Car;
         }
 
+        public bool IsAtCapacity()
+        {
+            return carInfo.Count >= capacity;
+        }
+
         private bool IsTicketValid(Ticket ticket)
         {
             return !ticket.IsUsed && ticket?.Id == carInfo[ticket?.Car];
-        }
-
-        private bool IsAtCapacity()
-        {
-            return carInfo.Count >= capacity;
         }
     }
 }
