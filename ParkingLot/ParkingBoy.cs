@@ -27,7 +27,7 @@ namespace ParkingLot
         public string ParkErrorMessage { get; set; }
         public string FetchErrorMessage { get; set; }
         public List<Ticket> Tickets { get; set; }
-        public List<Ticket> ParkingCar(List<Car> cars)
+        public virtual List<Ticket> ParkingCar(List<Car> cars)
         {
             foreach (Car car in cars)
             {
@@ -57,7 +57,7 @@ namespace ParkingLot
             return ticket;
         }
 
-        public List<string> FetchCar(List<Ticket> tickets)
+        public virtual List<string> FetchCar(List<Ticket> tickets)
         {
             List<string> cars = new List<string>();
             if (this.Lot.Availability != this.Lot.Capacity)
@@ -79,7 +79,7 @@ namespace ParkingLot
             return cars;
         }
 
-        public string FetchOneCar(Ticket ticket)
+        public virtual string FetchOneCar(Ticket ticket)
         {
             if (ticket != null)
             {

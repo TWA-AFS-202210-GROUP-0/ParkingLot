@@ -89,5 +89,24 @@ namespace ParkingLotTest
             Assert.Equal(shouldParledCars, fetchedCar);
             Assert.Equal("Unrecognized parking ticket.Please provide your parking ticket.", boy.FetchErrorMessage);
         }
+
+        [Fact]
+        public void Should_return_MAX_Lot_Avalibility_3_when_parks_given_many_cars()
+        {
+            //given
+            var carOne = new Car("AUCCD");
+            //var carTwo = new Car("QWEGY");
+            //var carThree = new Car("WEHDJ");
+            List<Car> cars = new List<Car>() { carOne, };
+            var shouldParledCars = new List<string>() { "AUCCD", };
+            var parkingLot = new List<ParkLot>() { new ParkLot(2), new ParkLot(3), new ParkLot(4), };
+            var boy = new SmartParkingBoy(parkingLot);
+            //when
+            var tickets = boy.ParkingCar(cars);
+            var fetchedCar = boy.FetchCar(tickets);
+            // then
+            Assert.Equal(shouldParledCars, fetchedCar);
+            Assert.Equal(3, parkingLot[2].Availability);
+        }
     }
 }
