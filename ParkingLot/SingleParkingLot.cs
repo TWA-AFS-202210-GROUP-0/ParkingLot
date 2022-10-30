@@ -10,8 +10,8 @@ namespace ParkingLot
 {
     public class SingleParkingLot
     {
+        private readonly Dictionary<Ticket, Car> carList;
         private int capacity;
-        public readonly Dictionary<Ticket, Car> carList;
 
         public SingleParkingLot(int capacity)
         {

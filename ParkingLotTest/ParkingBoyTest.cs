@@ -1,9 +1,6 @@
-﻿using System;
+﻿using ParkingLot;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ParkingLot;
+using System.Net.Sockets;
 using Xunit;
 
 namespace ParkingLotTest;
@@ -25,7 +22,7 @@ public class ParkingBoyTest
     }
 
     [Fact]
-    public void Should_return_car_when_parkingBoy_get_a_volid_ticket_given_a_car_park_in_a_SingleParkingLot_managed_by_a_parkingBoy()
+    public void Should_return_car_when_parkingBoy_get_a_vilid_ticket_given_a_car_park_in_a_SingleParkingLot_managed_by_a_parkingBoy()
     {
         // given
         ParkingBoy parkingBoy = new ParkingBoy();
@@ -82,7 +79,7 @@ public class ParkingBoyTest
     }
 
     [Fact]
-    public void Should_return_null_when_parkingBoy_fetch_given_a_parkingBoy_get_a_wrong_ticket()
+    public void Should_return_response_message_when_parkingBoy_fetch_given_a_parkingBoy_get_a_wrong_ticket()
     {
         // given
         ParkingBoy parkingBoy = new ParkingBoy();
@@ -97,13 +94,13 @@ public class ParkingBoyTest
         var tickets = parkingBoy.ParkSeveral(cars);
         var ticket = new Ticket();
         // when
-        var fetchedCar = parkingBoy.Fetch(ticket);
+        ExpectedException ex = Assert.Throws<ExpectedException>(() => parkingBoy.Fetch(ticket));
         // then
-        Assert.Equal(null, fetchedCar);
+        Assert.Equal("Unrecognized parking ticket.", ex.Message);
     }
 
     [Fact]
-    public void Should_return_null_when_parkingBoy_fetch_given_a_parkingBoy_get_a_used_ticket()
+    public void Should_return_response_message_when_parkingBoy_fetch_given_a_parkingBoy_get_a_used_ticket()
     {
         // given
         ParkingBoy parkingBoy = new ParkingBoy();
@@ -118,9 +115,9 @@ public class ParkingBoyTest
         var tickets = parkingBoy.ParkSeveral(cars);
         var fetchedCar1 = parkingBoy.Fetch(tickets[0]);
         // when
-        var fetchedCar2 = parkingBoy.Fetch(tickets[0]);
+        ExpectedException ex = Assert.Throws<ExpectedException>(() => parkingBoy.Fetch(tickets[0]));
         // then
-        Assert.Equal(null, fetchedCar2);
+        Assert.Equal("Unrecognized parking ticket.", ex.Message);
     }
 
     [Fact]

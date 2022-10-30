@@ -37,17 +37,12 @@ namespace ParkingLot
 
         public Car Fetch(Ticket ticket)
         {
-            for (int i = 0; i < singleParkingLots.Count; i++)
+            if (!ContainCar(ticket))
             {
-                var singleParkingLot = singleParkingLots[i];
-                if (singleParkingLot.Have(ticket))
-                {
-                    var car = singleParkingLot.Fetch(ticket);
-                    return car;
-                }
+                throw new ExpectedException("Unrecognized parking ticket.");
             }
 
-            return null;
+            return FetchCar(ticket);
         }
 
         public List<Ticket> ParkSeveral(List<Car> cars)
@@ -59,6 +54,34 @@ namespace ParkingLot
             }
 
             return tickets;
+        }
+
+        private bool ContainCar(Ticket ticket)
+        {
+            for (int i = 0; i < singleParkingLots.Count; i++)
+            {
+                var singleParkingLot = singleParkingLots[i];
+                if (singleParkingLot.Have(ticket))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private Car FetchCar(Ticket ticket)
+        {
+            for (int i = 0; i < singleParkingLots.Count; i++)
+            {
+                var singleParkingLot = singleParkingLots[i];
+                if (singleParkingLot.Have(ticket))
+                {
+                    return singleParkingLot.Fetch(ticket);
+                }
+            }
+
+            return null;
         }
     }
 }
