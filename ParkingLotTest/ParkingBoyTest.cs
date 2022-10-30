@@ -57,4 +57,27 @@ public class ParkingBoyTest
         // then
         Assert.Equal(typeof(List<Ticket>), tickets.GetType());
     }
+
+    [Fact]
+    public void Shoule_return_correspond_car_when_parkingBoy_fetch_with_a_vilid_ticket_given_SingleParkingLot_managed_by_a_parkingBoy_with_3_cars_parking()
+    {
+        // given
+        ParkingBoy parkingBoy = new ParkingBoy();
+        var cars = new List<Car>();
+        for (int i = 0; i < 3; i++)
+        {
+            cars.Add(new Car());
+        }
+
+        Car car = new Car();
+
+        SingleParkingLot parkingLot = new SingleParkingLot();
+        parkingBoy.Manage(parkingLot);
+        var tickets = parkingBoy.ParkSeveral(cars);
+        var ticket = parkingBoy.Park(car);
+        // when
+        var fetchedCar = parkingBoy.Fetch(ticket);
+        // then
+        Assert.Equal(car, fetchedCar);
+    }
 }
