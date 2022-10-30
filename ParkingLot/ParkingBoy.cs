@@ -49,5 +49,16 @@ namespace ParkingLot
 
             return null;
         }
+
+        public List<Ticket> ParkSeveral(List<Car> cars)
+        {
+            var tickets = new List<Ticket>();
+            foreach (var car in cars)
+            {
+                tickets.Add(Park(car));
+            }
+
+            return tickets;
+        }
     }
 }
