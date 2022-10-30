@@ -29,7 +29,12 @@
             }
         }
 
-        public bool HasCar(string carID)
+        internal int AvailablePositions()
+        {
+            return parkingCapicity - parkedCars.Count;
+        }
+
+        internal bool HasCar(string carID)
         {
             return parkedCars.Keys.Contains(carID);
         }
@@ -42,7 +47,7 @@
             }
         }
 
-        public bool IsFull()
+        internal bool IsFull()
         {
             return parkingCapicity - parkedCars.Count == 0;
         }

@@ -25,12 +25,9 @@ namespace ParkingLot
         public ParkingLot WorkingParkingLot { get => workingParkingLot; set => workingParkingLot = value; }
         public List<ParkingLot> WorkingParkingLots { get => workingParkingLots; set => workingParkingLots = value; }
 
-        public Ticket ParkCar (Car car)
+        public virtual Ticket ParkCar (Car car)
         {
-            if (car == null)
-            {
-                throw new WrongCarException();
-            }
+            CheckNotNullCar(car);
 
             ParkingLot availableParkingLot = workingParkingLots.FirstOrDefault(parkingLot => !parkingLot.IsFull());
             if (availableParkingLot == null)
@@ -44,7 +41,15 @@ namespace ParkingLot
             return ticket;
         }
 
-        public List<Ticket> ParkSeveralCars(List<Car> carList)
+        protected static void CheckNotNullCar(Car car)
+        {
+            if (car == null)
+            {
+                throw new WrongCarException();
+            }
+        }
+
+        public virtual List<Ticket> ParkSeveralCars(List<Car> carList)
         {
 
 
@@ -53,10 +58,7 @@ namespace ParkingLot
             {
                 try
                 {
-                    if (car == null)
-                    {
-                        throw new WrongCarException();
-                    }
+                    CheckNotNullCar(car);
                     ParkingLot availableParkingLot = workingParkingLots.FirstOrDefault(parkingLot => !parkingLot.IsFull());
                     if (availableParkingLot == null)
                     {
@@ -65,8 +67,8 @@ namespace ParkingLot
 
                     availableParkingLot.ParkCar(car);
                     Ticket ticketWhoseParking = new Ticket(car.CarID);
-                    ticketList.Add(ticketWhoseParking);
                     parkedTicketList.Add(ticketWhoseParking);
+                    ticketList.Add(ticketWhoseParking);
                 }
                 catch (NoPositionException e)
                 {
