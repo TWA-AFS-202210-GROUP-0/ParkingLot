@@ -25,7 +25,7 @@
             var newId = Guid.NewGuid();
             if (IsAtCapacity())
             {
-                return null;
+                throw new Exception("Not enough position.");
             }
 
             carInfo.Add(car, newId);

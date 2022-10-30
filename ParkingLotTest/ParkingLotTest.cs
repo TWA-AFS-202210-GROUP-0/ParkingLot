@@ -100,10 +100,9 @@ namespace ParkingLotTest
             Assert.NotNull(ticket2);
 
             // when
-            var ticket3 = parkingLot.Park(car3);
-
             // then
-            Assert.Null(ticket3);
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Park(car3); });
+            Assert.Equal("Not enough position.", ex.Message);
         }
 
         [Fact]
@@ -117,12 +116,10 @@ namespace ParkingLotTest
             ParkingLot parkingLot = new ParkingLot(2);
 
             // when
-            var tickets = parkingLot.Park(cars);
-
+            // when
             // then
-            Assert.NotNull(tickets[0]);
-            Assert.NotNull(tickets[1]);
-            Assert.Null(tickets[2]);
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Park(cars); });
+            Assert.Equal("Not enough position.", ex.Message);
         }
 
         [Fact]
