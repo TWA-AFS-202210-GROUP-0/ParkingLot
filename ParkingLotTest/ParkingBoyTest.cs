@@ -90,24 +90,25 @@ namespace ParkingLotTest
             Assert.Equal("Unrecognized parking ticket.", ex.Message);
         }
 
-        //[Fact]
-        //public void Should_NOT_get_ticket_when_park_cars_given_parking_lot_is_at_capacity()
-        //{
-        //    // given
-        //    Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
-        //    Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
-        //    Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
-        //    ParkingLot parkingLot = new ParkingLot("parkinglot", 2);
-        //    var ticket1 = parkingLot.BeParked(car1);
-        //    var ticket2 = parkingLot.BeParked(car2);
-        //    Assert.NotNull(ticket1);
-        //    Assert.NotNull(ticket2);
+        [Fact]
+        public void Should_NOT_get_ticket_when_park_cars_given_parking_lot_is_at_capacity()
+        {
+            // given
+            Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
+            Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
+            Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
 
-        //    // when
-        //    // then
-        //    Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeParked(car3); });
-        //    Assert.Equal("Not enough position.", ex.Message);
-        //}
+            ParkingBoy parkingBoy = new ParkingBoy(1, 1);
+            var ticket1 = parkingBoy.Park(car1);
+            var ticket2 = parkingBoy.Park(car2);
+            Assert.NotNull(ticket1);
+            Assert.NotNull(ticket2);
+
+            // when
+            // then
+            Exception ex = Assert.Throws<Exception>(() => { parkingBoy.Park(car3); });
+            Assert.Equal("Not enough position.", ex.Message);
+        }
 
         //[Fact]
         //public void Should_NOT_get_last_ticket_when_park_cars_given_parking_lot_is_at_capacity()
