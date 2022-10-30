@@ -15,7 +15,7 @@ namespace ParkingLotTest
         {
             //given
             var car = new Car("AUCCD");
-            var parkingLot = new ParkLot(1);
+            var parkingLot = new List<ParkLot>() { new ParkLot(1), };
             var boy = new ParkingBoy(parkingLot);
             //when
             var ticket = boy.ParkOneCar(car, 1);
@@ -35,7 +35,7 @@ namespace ParkingLotTest
             var carThree = new Car("WEHDJ");
             List<Car> cars = new List<Car>() { carOne, carTwo, carThree };
             var shouldParledCars = new List<string>() { "AUCCD", "QWEGY" };
-            var parkingLot = new ParkLot(2);
+            var parkingLot = new List<ParkLot>() { new ParkLot(2), };
             var boy = new ParkingBoy(parkingLot);
             //when
             var tickets = boy.ParkingCar(cars);
@@ -54,7 +54,7 @@ namespace ParkingLotTest
             var carThree = new Car("WEHDJ");
             List<Car> cars = new List<Car>() { carOne, carTwo, carThree };
             var shouldParledCars = new List<string>() { "AUCCD", "QWEGY" };
-            var parkingLot = new ParkLot(2);
+            var parkingLot = new List<ParkLot>() { new ParkLot(2), };
             var boy = new ParkingBoy(parkingLot);
             //when
             var tickets = boy.ParkingCar(cars);
@@ -74,7 +74,7 @@ namespace ParkingLotTest
             var carThree = new Car("WEHDJ");
             List<Car> cars = new List<Car>() { carOne, carTwo, carThree };
             var shouldParledCars = new List<string>() { "AUCCD", "QWEGY" };
-            var parkingLot = new ParkLot(2);
+            var parkingLot = new List<ParkLot>() { new ParkLot(1), new ParkLot(1), };
             var boy = new ParkingBoy(parkingLot);
             Ticket fakedTicket = new Ticket();
             fakedTicket.CarName = carThree.Name;

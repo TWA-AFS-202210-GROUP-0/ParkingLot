@@ -10,20 +10,27 @@ namespace ParkingLot
 {
     public class ParkingBoy
     {
-        public ParkingBoy(ParkLot lot)
+        public ParkingBoy(List<ParkLot> lots)
         {
             this.Tickets = new List<Ticket>();
-            this.Lot = lot;
+            this.Lot = new ParkLot(0);
+            this.Lots = lots;
+            for (int indexLot = 0; indexLot < this.Lots.Count; indexLot++)
+            {
+                this.Lot.Capacity += this.Lots[indexLot].Capacity;
+                this.Lot.Availability += this.Lots[indexLot].Availability;
+            }
         }
 
         public ParkLot Lot { get; set; }
+        public List<ParkLot> Lots { get; set; }
         public string ParkErrorMessage { get; set; }
         public string FetchErrorMessage { get; set; }
         public List<Ticket> Tickets { get; set; }
         public List<Ticket> ParkingCar(List<Car> cars)
         {
             foreach (Car car in cars)
-             {
+            {
                 if (this.Lot.Availability > 0)
                 {
                     this.ParkOneCar(car, this.Lot.Capacity - this.Lot.Availability + 1);
