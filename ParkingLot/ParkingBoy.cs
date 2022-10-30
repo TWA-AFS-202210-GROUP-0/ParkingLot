@@ -44,6 +44,10 @@ namespace ParkingLot
 
         public Car Fetch(Ticket ticket)
         {
+            if (ticket == null)
+            {
+                return parkingLot1.BeFetched(ticket);
+            }
             if (ticket.ParkingLot == PARKINGLOT1)
             {
                 return parkingLot1.BeFetched(ticket);

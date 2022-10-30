@@ -126,19 +126,18 @@ namespace ParkingLotTest
             Assert.Equal("Not enough position.", ex.Message);
         }
 
-        //[Fact]
-        //public void Should_NOT_get_CAR_when_fetch_car_given_no_ticket()
-        //{
-        //    // given
-        //    Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
-        //    ParkingLot parkingLot = new ParkingLot("parkinglot");
-        //    parkingLot.BeParked(car);
-        //    var ticket = new Ticket() { Car = car };
+        [Fact]
+        public void Should_NOT_get_CAR_when_fetch_car_given_no_ticket()
+        {
+            // given
+            Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
+            ParkingBoy parkingBoy = new ParkingBoy(1, 1);
+            parkingBoy.Park(car);
 
-        //    // when
-        //    // then
-        //    Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeFetched(null); });
-        //    Assert.Equal("Please provide your parking ticket.", ex.Message);
-        //}
+            // when
+            // then
+            Exception ex = Assert.Throws<Exception>(() => { parkingBoy.Fetch(null); });
+            Assert.Equal("Please provide your parking ticket.", ex.Message);
+        }
     }
 }
