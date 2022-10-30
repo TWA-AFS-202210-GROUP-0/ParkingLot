@@ -1,17 +1,25 @@
 ﻿namespace ParkingLot
 {
     using System;
+    using System.Collections.Generic;
+
     public class ParkingLot
     {
-        public Lazy<Car> ParkedCars { get; set; }
+        private List<Car> parkedCars = new List<Car>();
 
         public Ticket Park(Car car)
         {
+            parkedCars.Add(car);
             return new Ticket()
             {
-                Owner = car.Owner,
-                Name = car.Name,
+                Car = car,
             };
+        }
+
+        public Car Fetch(Ticket ticket)
+        {
+            this.parkedCars.Remove(ticket.Car);
+            return ticket.Car;
         }
     }
 }
