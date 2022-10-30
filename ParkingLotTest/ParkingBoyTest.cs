@@ -110,21 +110,21 @@ namespace ParkingLotTest
             Assert.Equal("Not enough position.", ex.Message);
         }
 
-        //[Fact]
-        //public void Should_NOT_get_last_ticket_when_park_cars_given_parking_lot_is_at_capacity()
-        //{
-        //    // given
-        //    Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
-        //    Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
-        //    Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
-        //    List<Car> cars = new List<Car>() { car1, car2, car3 };
-        //    ParkingLot parkingLot = new ParkingLot("parkinglot", 2);
+        [Fact]
+        public void Should_NOT_get_last_ticket_when_park_cars_given_parking_lot_is_at_capacity()
+        {
+            // given
+            Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
+            Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
+            Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
+            List<Car> cars = new List<Car>() { car1, car2, car3 };
+            ParkingBoy parkingBoy = new ParkingBoy(1, 1);
 
-        //    // when
-        //    // then
-        //    Exception ex = Assert.Throws<Exception>(() => { parkingLot.BeParked(cars); });
-        //    Assert.Equal("Not enough position.", ex.Message);
-        //}
+            // when
+            // then
+            Exception ex = Assert.Throws<Exception>(() => { parkingBoy.Park(cars); });
+            Assert.Equal("Not enough position.", ex.Message);
+        }
 
         //[Fact]
         //public void Should_NOT_get_CAR_when_fetch_car_given_no_ticket()
