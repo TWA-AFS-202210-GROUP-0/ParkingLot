@@ -19,7 +19,7 @@
 
         public int CurrentParkLot { get; set; }
 
-        public List<Ticket> ParkCar(List<Customer> customers)
+        public virtual List<Ticket> ParkCar(List<Customer> customers)
         {
             int parkLotIndex = 0;
             int usedPosition = 0;
@@ -46,7 +46,6 @@
                 if (usedPosition >= ParkLots[parkLotIndex].Capacity)
                 {
                     parkLotIndex++;
-
                     usedPosition = 0;
                 }
             }

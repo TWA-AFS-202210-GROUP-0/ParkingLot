@@ -152,5 +152,27 @@ namespace ParkingLotTest
             // then
             Assert.Equal(1, parkBoy.CurrentParkLot);
         }
+
+        [Fact]
+        public void Should_return_position_0_given_position_0_has_enough_position_when_park_car_using_smark_boy()
+        {
+            // given
+            Customer customer = new Customer(3);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(new Customer(1));
+            customers.Add(customer);
+            customers.Add(new Customer(2));
+
+            ParkBoy parkBoy = new SmartParkBoy();
+            List<ParkLot> parkLot = new List<ParkLot>();
+            parkLot.Add(new ParkLot(1));
+            parkLot.Add(new ParkLot(10));
+            parkBoy.ParkLots = parkLot;
+
+            // when
+            parkBoy.ParkCar(customers);
+            // then
+            Assert.Equal(0, parkBoy.CurrentParkLot);
+        }
     }
 }
