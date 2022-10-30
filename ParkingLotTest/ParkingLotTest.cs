@@ -124,5 +124,20 @@ namespace ParkingLotTest
             Assert.NotNull(tickets[1]);
             Assert.Null(tickets[2]);
         }
+
+        [Fact]
+        public void Should_NOT_get_CAR_when_fetch_car_given_no_ticket()
+        {
+            // given
+            Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
+            ParkingLot parkingLot = new ParkingLot();
+            parkingLot.Park(car);
+            var ticket = new Ticket() { Car = car };
+
+            // given
+            // then
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Fetch(null); });
+            Assert.Equal("Please provide your parking ticket.", ex.Message);
+        }
     }
 }
