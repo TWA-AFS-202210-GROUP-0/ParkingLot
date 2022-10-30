@@ -80,4 +80,25 @@ public class ParkingBoyTest
         // then
         Assert.Equal(car, fetchedCar);
     }
+
+    [Fact]
+    public void Shoule_return_null_when_parkingBoy_fetch_given_a_parkingBoy_get_a_wrong_ticket()
+    {
+        // given
+        ParkingBoy parkingBoy = new ParkingBoy();
+        var cars = new List<Car>();
+        for (int i = 0; i < 3; i++)
+        {
+            cars.Add(new Car());
+        }
+
+        SingleParkingLot parkingLot = new SingleParkingLot();
+        parkingBoy.Manage(parkingLot);
+        var tickets = parkingBoy.ParkSeveral(cars);
+        var ticket = new Ticket();
+        // when
+        var fetchedCar = parkingBoy.Fetch(ticket);
+        // then
+        Assert.Equal(null, fetchedCar);
+    }
 }
