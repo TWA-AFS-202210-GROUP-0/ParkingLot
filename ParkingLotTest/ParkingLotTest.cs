@@ -1,6 +1,7 @@
 namespace ParkingLotTest
 {
     using ParkingLot;
+    using System.Collections.Generic;
     using Xunit;
 
     public class ParkingLotTest
@@ -33,6 +34,23 @@ namespace ParkingLotTest
             // then
             Assert.Equal(car.Name, parkedCar.Name);
             Assert.Equal(car.Owner, parkedCar.Owner);
+        }
+
+        [Fact]
+        public void Should_get_parking_tickets_when_park_cars_given_a_parking_lot_and_cars()
+        {
+            // given
+            Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
+            Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
+            Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
+            List<Car> cars = new List<Car>() { car1, car2, car3 };
+            ParkingLot parkingLot = new ParkingLot();
+
+            // when
+            var tickets = parkingLot.Park(cars);
+
+            // then
+            Assert.Equal(tickets[0].Car, car1);
         }
     }
 }
