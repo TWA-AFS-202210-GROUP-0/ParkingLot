@@ -101,7 +101,9 @@ namespace ParkingLotTest
             customers.Add(customer);
 
             ParkBoy parkBoy = new ParkBoy();
-            parkBoy.ParkLotCapacity = 2;
+            List<ParkLot> parkLot = new List<ParkLot>();
+            parkLot.Add(new ParkLot(2));
+            parkBoy.ParkLots = parkLot;
             // when
             var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.ParkCar(customers));
             // then
@@ -119,12 +121,36 @@ namespace ParkingLotTest
             customers.Add(customer);
 
             ParkBoy parkBoy = new ParkBoy();
-            parkBoy.ParkLotCapacity = 2;
+            List<ParkLot> parkLot = new List<ParkLot>();
+            parkLot.Add(new ParkLot(2));
+            parkBoy.ParkLots = parkLot;
 
             // when
             var exeception = Assert.Throws<ParkingLotException>(() => parkBoy.ParkCar(customers));
             // then
             Assert.Equal("Not enough position.", exeception.Message);
+        }
+
+        [Fact]
+        public void Should_return_position_1_given_position_0_has_no_enough_position_when_park_car()
+        {
+            // given
+            Customer customer = new Customer(3);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(new Customer(1));
+            customers.Add(new Customer(2));
+            customers.Add(customer);
+
+            ParkBoy parkBoy = new ParkBoy();
+            List<ParkLot> parkLot = new List<ParkLot>();
+            parkLot.Add(new ParkLot(2));
+            parkLot.Add(new ParkLot(1));
+            parkBoy.ParkLots = parkLot;
+
+            // when
+            parkBoy.ParkCar(customers);
+            // then
+            Assert.Equal(1, parkBoy.CurrentParkLot);
         }
     }
 }

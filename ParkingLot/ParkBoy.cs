@@ -8,19 +8,30 @@
     {
         public ParkBoy()
         {
+            this.ParkLots.Add(new ParkLot(10));
         }
 
         public List<Ticket> Tickets { get; set; } = new List<Ticket>();
 
         public List<Customer> Customers { get; set; } = new List<Customer>();
 
-        // any par lot would just add the parkLotCapacity
-        public int ParkLotCapacity { get; set; } = 10;
+        public List<ParkLot> ParkLots { get; set; } = new List<ParkLot>();
+
+        public int CurrentParkLot { get; set; }
 
         public List<Ticket> ParkCar(List<Customer> customers)
         {
+            int parkLotIndex = 0;
+            int usedPosition = 0;
             foreach (var customer in customers)
             {
+                if (parkLotIndex >= ParkLots.Count)
+                {
+                    throw new ParkingLotException("Not enough position.");
+                }
+
+                this.CurrentParkLot = parkLotIndex;
+
                 if (Tickets.Any(t => t.Id == customer.CarID) || customer == null)
                 {
                     continue;
@@ -31,9 +42,12 @@
                 customer.TicketID = customer.CarID;
                 customer.HasTicket = true;
 
-                if (Tickets.Count >= ParkLotCapacity)
+                usedPosition++;
+                if (usedPosition >= ParkLots[parkLotIndex].Capacity)
                 {
-                    throw new ParkingLotException("Not enough position.");
+                    parkLotIndex++;
+
+                    usedPosition = 0;
                 }
             }
 
