@@ -56,6 +56,11 @@
             return carInfo.Count >= capacity;
         }
 
+        public int GetEmptyPositionNumber()
+        {
+            return capacity - carInfo.Count;
+        }
+
         private bool IsTicketValid(Ticket ticket)
         {
             return !ticket.IsUsed && ticket?.Id == carInfo[ticket?.Car];

@@ -28,6 +28,45 @@ namespace ParkingLotTest
         }
 
         [Fact]
+        public void Should_park_in_the_more_empty_lot_when_park_given_the_first_lot_is_at_capacity_for_smart_boy()
+        {
+            // given
+            ParkingBoy parkingBoy = new SmartParkingBoy(1, 2);
+            Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
+            Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
+
+            // when
+            var ticket1 = parkingBoy.Park(car1);
+            var ticket2 = parkingBoy.Park(car2);
+
+            // then
+            Assert.Equal("ParkingLot2", ticket1.ParkingLot);
+            Assert.Equal("ParkingLot1", ticket2.ParkingLot);
+        }
+
+        [Fact]
+        public void Should_get_parking_tickets_smartly_when_park_cars_given_a_smart_boy()
+        {
+            // given
+            Car car1 = new Car() { Name = "Xiaohei", Owner = "Laohei" };
+            Car car2 = new Car() { Name = "Xiaobai", Owner = "Laobai" };
+            Car car3 = new Car() { Name = "Xiaohuang", Owner = "Laohuang" };
+            List<Car> cars = new List<Car>() { car1, car2, car3 };
+            ParkingBoy parkingBoy = new SmartParkingBoy(3, 2);
+
+            // when
+            var tickets = parkingBoy.Park(cars);
+
+            // then
+            Assert.Equal(tickets[0].Car, car1);
+            Assert.Equal(tickets[1].Car, car2);
+            Assert.Equal(tickets[2].Car, car3);
+            Assert.Equal("ParkingLot1", tickets[0].ParkingLot);
+            Assert.Equal("ParkingLot1", tickets[1].ParkingLot);
+            Assert.Equal("ParkingLot2", tickets[2].ParkingLot);
+        }
+
+        [Fact]
         public void Should_get_parking_ticket_when_park_a_car_given_a_parking_lot_and_a_car()
         {
             // given

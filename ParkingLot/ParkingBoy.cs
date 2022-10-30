@@ -10,34 +10,35 @@ namespace ParkingLot
     {
         private const string PARKINGLOT1 = "ParkingLot1";
         private const string PARKINGLOT2 = "ParkingLot2";
-        private ParkingLot parkingLot1;
-        private ParkingLot parkingLot2;
 
         public ParkingBoy()
         {
-            parkingLot1 = new ParkingLot(PARKINGLOT1);
-            parkingLot2 = new ParkingLot(PARKINGLOT2);
+            ParkingLot1 = new ParkingLot(PARKINGLOT1);
+            ParkingLot2 = new ParkingLot(PARKINGLOT2);
         }
 
         public ParkingBoy(int lot1Limit, int lot2Limit)
         {
-            parkingLot1 = new ParkingLot(PARKINGLOT1, lot1Limit);
-            parkingLot2 = new ParkingLot(PARKINGLOT2, lot2Limit);
+            ParkingLot1 = new ParkingLot(PARKINGLOT1, lot1Limit);
+            ParkingLot2 = new ParkingLot(PARKINGLOT2, lot2Limit);
         }
 
-        public Ticket Park(Car car)
+        public ParkingLot ParkingLot1 { get; set; }
+        public ParkingLot ParkingLot2 { get; set; }
+
+        public virtual Ticket Park(Car car)
         {
-            if (parkingLot1.IsAtCapacity())
+            if (ParkingLot1.IsAtCapacity())
             {
-                return parkingLot2.BeParked(car);
+                return ParkingLot2.BeParked(car);
             }
 
-            if (parkingLot2.IsAtCapacity())
+            if (ParkingLot2.IsAtCapacity())
             {
                 return null;
             }
 
-            return parkingLot1.BeParked(car);
+            return ParkingLot1.BeParked(car);
         }
 
         public List<Ticket> Park(List<Car> cars) => cars.Select(car => Park(car)).ToList();
@@ -46,15 +47,16 @@ namespace ParkingLot
         {
             if (ticket == null)
             {
-                return parkingLot1.BeFetched(ticket);
+                return ParkingLot1.BeFetched(ticket);
             }
+
             if (ticket.ParkingLot == PARKINGLOT1)
             {
-                return parkingLot1.BeFetched(ticket);
+                return ParkingLot1.BeFetched(ticket);
             }
             else if (ticket.ParkingLot == PARKINGLOT2)
             {
-                return parkingLot2.BeFetched(ticket);
+                return ParkingLot2.BeFetched(ticket);
             }
 
             return null;
