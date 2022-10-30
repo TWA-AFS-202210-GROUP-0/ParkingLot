@@ -25,7 +25,7 @@ namespace ParkingLot
             this.carList = new Dictionary<Ticket, Car>();
         }
 
-        public Ticket Park(Car car)
+        public virtual Ticket Park(Car car)
         {
             var ticket = new Ticket();
             carList.Add(ticket, car);
@@ -62,6 +62,11 @@ namespace ParkingLot
             }
 
             return null;
+        }
+
+        public int GetRemainPosition()
+        {
+            return this.capacity - this.carList.Count;
         }
     }
 }

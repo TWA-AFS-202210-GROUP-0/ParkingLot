@@ -9,25 +9,25 @@ namespace ParkingLot
 {
     public class ParkingBoy
     {
-        private readonly List<SingleParkingLot> singleParkingLots = new List<SingleParkingLot>();
+        protected List<SingleParkingLot> SingleParkingLots { get; set; }
 
         public ParkingBoy()
         {
-            this.singleParkingLots = new List<SingleParkingLot>();
+            this.SingleParkingLots = new List<SingleParkingLot>();
         }
 
         public void Manage(SingleParkingLot singleParkingLot)
         {
-            this.singleParkingLots.Add(singleParkingLot);
+            this.SingleParkingLots.Add(singleParkingLot);
         }
 
-        public Ticket Park(Car car)
+        public virtual Ticket Park(Car car)
         {
-            for (int i = 0; i < singleParkingLots.Count; i++)
+            for (int i = 0; i < SingleParkingLots.Count; i++)
             {
-                if (singleParkingLots[i].IsNotFull())
+                if (SingleParkingLots[i].IsNotFull())
                 {
-                    var ticket = singleParkingLots[i].Park(car);
+                    var ticket = SingleParkingLots[i].Park(car);
                     return ticket;
                 }
             }
@@ -63,9 +63,9 @@ namespace ParkingLot
 
         private bool ContainCar(Ticket ticket)
         {
-            for (int i = 0; i < singleParkingLots.Count; i++)
+            for (int i = 0; i < SingleParkingLots.Count; i++)
             {
-                var singleParkingLot = singleParkingLots[i];
+                var singleParkingLot = SingleParkingLots[i];
                 if (singleParkingLot.Have(ticket))
                 {
                     return true;
@@ -77,9 +77,9 @@ namespace ParkingLot
 
         private Car FetchCar(Ticket ticket)
         {
-            for (int i = 0; i < singleParkingLots.Count; i++)
+            for (int i = 0; i < SingleParkingLots.Count; i++)
             {
-                var singleParkingLot = singleParkingLots[i];
+                var singleParkingLot = SingleParkingLots[i];
                 if (singleParkingLot.Have(ticket))
                 {
                     return singleParkingLot.Fetch(ticket);
