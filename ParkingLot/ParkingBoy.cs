@@ -32,7 +32,7 @@ namespace ParkingLot
                 }
             }
 
-            return null;
+            throw new ExpectedException("Not enough position.");
         }
 
         public Car Fetch(Ticket ticket)
