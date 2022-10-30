@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace ParkingLot
         }
 
         public ParkLot Lot { get; set; }
+        public string ParkErrorMessage { get; set; }
+        public string FetchErrorMessage { get; set; }
         public List<Ticket> Tickets { get; set; }
         public List<Ticket> ParkingCar(List<Car> cars)
         {
@@ -25,10 +28,15 @@ namespace ParkingLot
                 {
                     this.ParkOneCar(car, this.Lot.Capacity - this.Lot.Availability + 1);
                 }
-                else if (this.Lot.Availability == 0) { return this.Tickets; }
+                else if (this.Lot.Availability == 0)
+                {
+                    this.ParkErrorMessage = "Not enough position.";
+                    Console.WriteLine(this.ParkErrorMessage);
+                    return this.Tickets;
+                }
             }
 
-             return this.Tickets;
+            return this.Tickets;
         }
 
         public Ticket ParkOneCar(Car car, int position)
@@ -49,9 +57,14 @@ namespace ParkingLot
             {
                foreach (Ticket ticket in tickets)
                 {
-                    if (this.FetchOneCar(ticket) != string.Empty)
+                    try
                     {
                         cars.Add(this.FetchOneCar(ticket));
+                    }
+                    catch (ParkingLotException e)
+                    {
+                        this.FetchErrorMessage += e.Message;
+                        continue;
                     }
                 }
             }
@@ -67,9 +80,11 @@ namespace ParkingLot
                 {
                     return car.Name;
                 }
+
+                throw new ParkingLotException("Unrecognized parking ticket.");
             }
 
-            return string.Empty;
+            throw new ParkingLotException("Please provide your parking ticket.");
         }
     }
 }
