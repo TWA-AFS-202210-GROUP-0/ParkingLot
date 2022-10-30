@@ -6,19 +6,33 @@
 
     public class ParkBoy
     {
-        private List<Car> cars = new List<Car>();
+        private List<Customer> customers = new List<Customer>();
+        private List<Ticket> tickets = new List<Ticket>();
 
-        public ParkBoy(List<Car> cars)
+        public ParkBoy()
         {
-            this.cars = cars;
         }
 
-        public List<Car> Cars { get => cars; set => cars = value; }
+        public List<Customer> Customers { get => customers; set => customers = value; }
 
-        public List<Ticket> ParkCar()
+        public List<Ticket> ParkCar(List<Customer> customers)
         {
-            List<Ticket> tickets = this.cars.Select(c => new Ticket(c.Id)).ToList();
+            this.Customers = customers;
+            List<Ticket> tickets = this.customers.Select(c => new Ticket(c.CarID)).ToList();
+            this.tickets = tickets;
             return tickets;
+        }
+
+        public bool FetchCar(Customer customer)
+        {
+            if (tickets.Any(s => s.Id == customer.CarID))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
