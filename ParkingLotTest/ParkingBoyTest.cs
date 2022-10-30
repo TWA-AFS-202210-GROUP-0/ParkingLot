@@ -121,27 +121,6 @@ public class ParkingBoyTest
     }
 
     [Fact]
-    public void Should_return_null_when_parkingBoy_park_given_a_parkingBoy_manage_a_parklot_with_default_capacity_and_full()
-    {
-        // given
-        ParkingBoy parkingBoy = new ParkingBoy();
-        var cars = new List<Car>();
-        for (int i = 0; i < 10; i++)
-        {
-            cars.Add(new Car());
-        }
-
-        SingleParkingLot parkingLot = new SingleParkingLot();
-        parkingBoy.Manage(parkingLot);
-        var tickets = parkingBoy.ParkSeveral(cars);
-        var car = new Car();
-        // when
-        var ticket = parkingBoy.Park(car);
-        // then
-        Assert.Equal(null, ticket);
-    }
-
-    [Fact]
     public void Should_return_response_message_when_parkingBoy_fetch_given_a_parkingBoy_get_no_ticket()
     {
         // given
@@ -179,5 +158,24 @@ public class ParkingBoyTest
         ExpectedException ex = Assert.Throws<ExpectedException>(() => parkingBoy.Park(new Car()));
         // then
         Assert.Equal("Not enough position.", ex.Message);
+    }
+
+    [Fact]
+    public void Should_return_several_ticket_when_parkingBoy_park_20_car_given_a_parkingBoy_manage_2_parkingLots_with_capacity_of_20()
+    {
+        // given
+        ParkingBoy parkingBoy = new ParkingBoy();
+        var cars = new List<Car>();
+        for (int i = 0; i < 20; i++)
+        {
+            cars.Add(new Car());
+        }
+
+        parkingBoy.Manage(new SingleParkingLot());
+        parkingBoy.Manage(new SingleParkingLot());
+        // when
+        var tickets = parkingBoy.ParkSeveral(cars);
+        // then
+        Assert.Equal(typeof(List<Ticket>), tickets.GetType());
     }
 }
