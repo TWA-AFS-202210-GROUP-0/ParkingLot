@@ -39,5 +39,20 @@ namespace ParkingLotTest
             Assert.Equal(1, tickets[0].Id);
             Assert.True(res);
         }
+
+        [Fact]
+        public void Should_return_no_car_when_customer_give_the_wrong_ticket_or_no_given_a_ticket()
+        {
+            // given
+            Customer customer = new Customer(1);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(new Customer(1));
+            ParkBoy parkBoy = new ParkBoy();
+
+            // when
+            var res = parkBoy.FetchCar(customer);
+            // then
+            Assert.False(res);
+        }
     }
 }

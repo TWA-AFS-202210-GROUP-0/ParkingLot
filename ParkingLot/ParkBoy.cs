@@ -18,8 +18,15 @@
         public List<Ticket> ParkCar(List<Customer> customers)
         {
             this.Customers = customers;
-            List<Ticket> tickets = this.customers.Select(c => new Ticket(c.CarID)).ToList();
-            this.tickets = tickets;
+            List<Ticket> newTickets = new List<Ticket>();
+            foreach (var customer in customers)
+            {
+                newTickets.Add(new Ticket(customer.CarID));
+                customer.TicketID = customer.CarID;
+                customer.HasTicket = true;
+            }
+
+            this.tickets = newTickets;
             return tickets;
         }
 

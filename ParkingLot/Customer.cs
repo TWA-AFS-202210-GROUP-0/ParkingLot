@@ -8,13 +8,13 @@ namespace ParkingLot
 {
     public class Customer
     {
-        private int carID;
-
-        public Customer(int id)
+        public Customer(int carID)
         {
-            this.carID = id;
+            this.CarID = carID;
         }
 
-        public int CarID { get => carID; set => carID = value; }
+        public int CarID { get; set; }
+        public int TicketID { get; set; }
+        public bool HasTicket { get; set; }
     }
 }
