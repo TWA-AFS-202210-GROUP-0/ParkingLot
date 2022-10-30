@@ -71,5 +71,25 @@ namespace ParkingLotTest
             // then
             Assert.False(res);
         }
+
+        [Fact]
+        public void Should_return_no_car_given_park_lot_is_less_when_can_park_car()
+        {
+            // given
+            Customer customer = new Customer(3);
+            List<Customer> customers = new List<Customer>();
+            customers.Add(new Customer(1));
+            customers.Add(new Customer(2));
+            customers.Add(customer);
+
+            ParkBoy parkBoy = new ParkBoy();
+            parkBoy.ParkLotCapacity = 2;
+            parkBoy.ParkCar(customers);
+
+            // when
+            var res = parkBoy.FetchCar(customer);
+            // then
+            Assert.False(res);
+        }
     }
 }

@@ -6,36 +6,39 @@
 
     public class ParkBoy
     {
-        private List<Customer> customers = new List<Customer>();
-        private List<Ticket> tickets = new List<Ticket>();
-
         public ParkBoy()
         {
         }
 
-        public List<Customer> Customers { get => customers; set => customers = value; }
+        public List<Ticket> Tickets { get; set; } = new List<Ticket>();
+
+        public List<Customer> Customers { get; set; } = new List<Customer>();
+
+        public int ParkLotCapacity { get; set; } = 10;
 
         public List<Ticket> ParkCar(List<Customer> customers)
         {
             this.Customers = customers;
-            List<Ticket> newTickets = new List<Ticket>();
             foreach (var customer in customers)
             {
                 // my system gererate the ticketID === carID
-                newTickets.Add(new Ticket(customer.CarID, true));
+                Tickets.Add(new Ticket(customer.CarID, true));
                 customer.TicketID = customer.CarID;
                 customer.HasTicket = true;
+                if (Tickets.Count >= ParkLotCapacity)
+                {
+                    break;
+                }
             }
 
-            this.tickets = newTickets;
-            return tickets;
+            return Tickets;
         }
 
         public bool FetchCar(Customer customer)
         {
             try
             {
-                var ticket = tickets.Single(t => t.Id == customer.CarID);
+                var ticket = Tickets.Single(t => t.Id == customer.CarID);
                 return ticket.IsValid;
             }
             catch (Exception e)
