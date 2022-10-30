@@ -41,9 +41,7 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy(parkingLot);
             var car1 = new Car("12345");
             var car2 = new Car("56789");
-            var carList = new List<Car>();
-            carList.Add(car1);
-            carList.Add(car2);
+            var carList = new List<Car>() { car1, car2 };
             var ticketList = parkingBoy.ParkSeveralCars(carList);
             //when
             Car fetchedCar = parkingBoy.FetchCar(ticketList[0]);
@@ -102,6 +100,7 @@ namespace ParkingLotTest
                 string carID = carIndex.ToString();
                 parkingBoy.ParkCar(new Car(carID));
             }
+
             var car = new Car("11");
             //when
             NoPositionException exception = Assert.Throws<NoPositionException>(() => parkingBoy.ParkCar(car));
@@ -122,9 +121,7 @@ namespace ParkingLotTest
             }
             var car10 = new Car("10");
             var car11 = new Car("11");
-            var carList = new List<Car>();
-            carList.Add(car10);
-            carList.Add(car11);
+            var carList = new List<Car>() { car10, car11 };
             //when
             var ticketList = parkingBoy.ParkSeveralCars(carList);
             //then
@@ -140,10 +137,11 @@ namespace ParkingLotTest
             var parkingBoy = new ParkingBoy(parkingLot);
             var car = new Car("12345");
             parkingBoy.ParkCar(car);
+            var car2 = new Car("12345");
             //when
             //then
             Assert.Throws<WrongCarException>(() => parkingBoy.ParkCar(null));
-            Assert.Throws<WrongCarException>(() => parkingBoy.ParkCar(car));
+            Assert.Throws<WrongCarException>(() => parkingBoy.ParkCar(car2));
 
         }
     }

@@ -14,7 +14,7 @@
             this.parkingCapicity = parkingCapicity;
         }
 
-        public void ParkCar(Car car)
+        public virtual void ParkCar(Car car)
         {
             CheckValidCar(car);
             CheckCapicity();
@@ -23,17 +23,28 @@
 
         private void CheckValidCar(Car car)
         {
-            if (parkedCars.Values.Contains(car))
+            if (HasCar(car.CarID))
             {
                 throw new WrongCarException();
             }
         }
+
+        public bool HasCar(string carID)
+        {
+            return parkedCars.Keys.Contains(carID);
+        }
+
         private void CheckCapicity()
         {
-            if (parkingCapicity - parkedCars.Count == 0)
+            if (IsFull())
             {
                 throw new NoPositionException("Not enough position.");
             }
+        }
+
+        public bool IsFull()
+        {
+            return parkingCapicity - parkedCars.Count == 0;
         }
 
         public Car FetchCar(string carID)

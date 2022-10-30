@@ -9,21 +9,36 @@ namespace ParkingLot
     public class ParkingBoy
     {
         private ParkingLot workingParkingLot;
-        private List<Ticket> parkedTicketList= new List<Ticket>();
+        private List<Ticket> parkedTicketList = new List<Ticket>();
+        private List<ParkingLot> workingParkingLots = new List<ParkingLot>();
+
         public ParkingBoy(ParkingLot parkingLot)
         {
-            workingParkingLot = parkingLot;
+            this.workingParkingLots.Add(parkingLot);
+        }
+
+        public ParkingBoy(List<ParkingLot> workingParkingLots)
+        {
+            this.workingParkingLots = workingParkingLots;
         }
 
         public ParkingLot WorkingParkingLot { get => workingParkingLot; set => workingParkingLot = value; }
-        
+        public List<ParkingLot> WorkingParkingLots { get => workingParkingLots; set => workingParkingLots = value; }
+
         public Ticket ParkCar (Car car)
         {
             if (car == null)
             {
                 throw new WrongCarException();
             }
-            workingParkingLot.ParkCar(car);
+
+            ParkingLot availableParkingLot = workingParkingLots.FirstOrDefault(parkingLot => !parkingLot.IsFull());
+            if (availableParkingLot == null)
+            {
+                throw new NoPositionException("Not enough position.");
+            }
+
+            availableParkingLot.ParkCar(car);
             Ticket ticket = new Ticket(car.CarID);
             parkedTicketList.Add(ticket);
             return ticket;
@@ -42,8 +57,13 @@ namespace ParkingLot
                     {
                         throw new WrongCarException();
                     }
+                    ParkingLot availableParkingLot = workingParkingLots.FirstOrDefault(parkingLot => !parkingLot.IsFull());
+                    if (availableParkingLot == null)
+                    {
+                        throw new NoPositionException("Not enough position.");
+                    }
 
-                    workingParkingLot.ParkCar(car);
+                    availableParkingLot.ParkCar(car);
                     Ticket ticketWhoseParking = new Ticket(car.CarID);
                     ticketList.Add(ticketWhoseParking);
                     parkedTicketList.Add(ticketWhoseParking);
@@ -65,7 +85,8 @@ namespace ParkingLot
         {
             CheckValidTicket(ticket);
             parkedTicketList.Remove(ticket);
-            return workingParkingLot.FetchCar(ticket.CarID);
+            ParkingLot parkedLot = workingParkingLots.FirstOrDefault(parkingLot => parkingLot.HasCar(ticket.CarID));
+            return parkedLot.FetchCar(ticket.CarID);
         }
 
         private void CheckValidTicket(Ticket ticket)
