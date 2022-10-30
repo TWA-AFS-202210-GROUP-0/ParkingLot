@@ -40,7 +40,7 @@
 
         public Car Fetch(Ticket ticket)
         {
-            if (!IsTicketValid(ticket)) { return null; }
+            if (!IsTicketValid(ticket)) { throw new Exception("Unrecognized parking ticket."); }
             carInfo.Remove(ticket.Car);
             ticket.IsUsed = true;
             return ticket.Car;

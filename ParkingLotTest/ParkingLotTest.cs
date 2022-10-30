@@ -1,6 +1,7 @@
 namespace ParkingLotTest
 {
     using ParkingLot;
+    using System;
     using System.Collections.Generic;
     using Xunit;
 
@@ -62,11 +63,10 @@ namespace ParkingLotTest
             parkingLot.Park(car);
             var ticket = new Ticket() { Car = car };
 
-            // when
-            var parkedCar = parkingLot.Fetch(ticket);
-
+            // given
             // then
-            Assert.Null(parkedCar);
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Fetch(ticket); });
+            Assert.Equal("Unrecognized parking ticket.", ex.Message);
         }
 
         [Fact]
@@ -80,11 +80,10 @@ namespace ParkingLotTest
             Assert.Equal(parkedCar, car);
             Assert.True(ticket.IsUsed);
 
-            // when
-            parkedCar = parkingLot.Fetch(ticket);
-
+            // given
             // then
-            Assert.Null(parkedCar);
+            Exception ex = Assert.Throws<Exception>(() => { parkingLot.Fetch(ticket); });
+            Assert.Equal("Unrecognized parking ticket.", ex.Message);
         }
 
         [Fact]
