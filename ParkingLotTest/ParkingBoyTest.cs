@@ -140,4 +140,24 @@ public class ParkingBoyTest
         // then
         Assert.Equal(null, ticket);
     }
+
+    [Fact]
+    public void Should_return_response_message_when_parkingBoy_fetch_given_a_parkingBoy_get_no_ticket()
+    {
+        // given
+        ParkingBoy parkingBoy = new ParkingBoy();
+        var cars = new List<Car>();
+        for (int i = 0; i < 3; i++)
+        {
+            cars.Add(new Car());
+        }
+
+        SingleParkingLot parkingLot = new SingleParkingLot();
+        parkingBoy.Manage(parkingLot);
+        var tickets = parkingBoy.ParkSeveral(cars);
+        // when
+        ExpectedException ex = Assert.Throws<ExpectedException>(() => parkingBoy.Fetch());
+        // then
+        Assert.Equal("Please provide your parking ticket.", ex.Message);
+    }
 }

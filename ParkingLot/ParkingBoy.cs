@@ -45,6 +45,11 @@ namespace ParkingLot
             return FetchCar(ticket);
         }
 
+        public Car Fetch()
+        {
+            throw new ExpectedException("Please provide your parking ticket.");
+        }
+
         public List<Ticket> ParkSeveral(List<Car> cars)
         {
             var tickets = new List<Ticket>();
