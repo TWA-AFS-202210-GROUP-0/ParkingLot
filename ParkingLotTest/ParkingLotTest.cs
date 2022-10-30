@@ -52,5 +52,21 @@ namespace ParkingLotTest
             // then
             Assert.Equal(tickets[0].Car, car1);
         }
+
+        [Fact]
+        public void Should_NOT_get_CAR_when_park_cars_given_a_wrong_ticket()
+        {
+            // given
+            Car car = new Car() { Name = "Xiaohei", Owner = "laohei" };
+            ParkingLot parkingLot = new ParkingLot();
+            parkingLot.Park(car);
+            var ticket = new Ticket() { Car = car };
+
+            // when
+            var parkedCar = parkingLot.Fetch(ticket);
+
+            // then
+            Assert.Null(parkedCar);
+        }
     }
 }

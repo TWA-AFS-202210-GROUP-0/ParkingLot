@@ -5,13 +5,15 @@
 
     public class ParkingLot
     {
-        private List<Car> parkedCars = new List<Car>();
+        private Dictionary<Car, Guid> carInfo = new Dictionary<Car, Guid>();
 
         public Ticket Park(Car car)
         {
-            parkedCars.Add(car);
+            var newId = Guid.NewGuid();
+            carInfo.Add(car, newId);
             return new Ticket()
             {
+                Id = newId,
                 Car = car,
             };
         }
@@ -21,7 +23,8 @@
             var tickets = new List<Ticket>();
             foreach (var car in cars)
             {
-                parkedCars.Add(car);
+                var newId = Guid.NewGuid();
+                carInfo.Add(car, newId);
                 tickets.Add(new Ticket() { Car = car });
             }
 
@@ -30,8 +33,14 @@
 
         public Car Fetch(Ticket ticket)
         {
-            this.parkedCars.Remove(ticket.Car);
+            if (!ValidateTicket(ticket)) { return null; }
+            this.carInfo.Remove(ticket.Car);
             return ticket.Car;
+        }
+
+        private bool ValidateTicket(Ticket ticket)
+        {
+            return ticket?.Id == carInfo[ticket?.Car];
         }
     }
 }
