@@ -3,6 +3,7 @@ using ParkingLot;
 namespace ParkingLotTest
 {
     using ParkingLot;
+    using System;
     using System.Collections.Generic;
     using Xunit;
 
@@ -16,9 +17,32 @@ namespace ParkingLotTest
             var parkingLot = new ParkLot(1);
             var boy = new ParkingBoy(parkingLot);
             //when
-            var ticket = boy.ParkingCar(car);
+            var ticket = boy.ParkOneCar(car, 1);
+            var fetchedCar = boy.FetchOneCar(ticket);
             // then
             Assert.Equal(1, boy.Tickets.Count);
+            Assert.Equal("AUCCD", ticket.CarName);
+            Assert.Equal("AUCCD", fetchedCar);
+        }
+
+        [Fact]
+        public void Should_return_finishing_parkig_Multiple_Cars_and_RightCars_ticket_when_parks_given_many_cars()
+        {
+            //given
+            var carOne = new Car("AUCCD");
+            var carTwo = new Car("QWEGY");
+            var carThree = new Car("WEHDJ");
+            List<Car> cars = new List<Car>() { carOne, carTwo, carThree };
+            var shouldParledCars = new List<string>() { "AUCCD", "QWEGY" };
+            var parkingLot = new ParkLot(2);
+            var boy = new ParkingBoy(parkingLot);
+            //when
+            var tickets = boy.ParkingCar(cars);
+            var fetchedCar = boy.FetchCar(tickets);
+            // then
+            Assert.Equal(2, tickets.Count);
+            Assert.Equal(shouldParledCars, fetchedCar);
+            
         }
     }
 }
