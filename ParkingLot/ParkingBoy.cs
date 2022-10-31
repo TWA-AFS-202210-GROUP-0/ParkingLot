@@ -46,10 +46,8 @@ namespace ParkingLot
             }
         }
 
-        public virtual List<Ticket> ParkSeveralCars(List<Car> carList)
+        public virtual ParkingSeveralCarsResponse ParkSeveralCars(List<Car> carList)
         {
-
-
             var ticketList = new List<Ticket>();
             foreach (Car car in carList)
             {
@@ -67,15 +65,29 @@ namespace ParkingLot
                 }
                 catch (NoPositionException e)
                 {
-                    ticketList.Add(null);
+                    return new ParkingSeveralCarsResponse()
+                    {
+                        TicketList = ticketList,
+                        IsAllCarsParked = false,
+                        Message = e.Message,
+                    };
                 }
                 catch (WrongCarException e)
                 {
-                    ticketList.Add(null);
+                    return new ParkingSeveralCarsResponse()
+                    {
+                        TicketList = ticketList,
+                        IsAllCarsParked = false,
+                        Message = e.Message,
+                    };
                 }
             }
 
-            return ticketList;
+            return new ParkingSeveralCarsResponse()
+            {
+                TicketList = ticketList,
+                IsAllCarsParked = true,
+            };
         }
 
         protected Ticket ParkCarInSpecificParkingLot(Car car, ParkingLot availableParkingLot)

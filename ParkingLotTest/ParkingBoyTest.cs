@@ -42,9 +42,9 @@ namespace ParkingLotTest
             var car1 = new Car("12345");
             var car2 = new Car("56789");
             var carList = new List<Car>() { car1, car2 };
-            var ticketList = parkingBoy.ParkSeveralCars(carList);
+            var parkMessage = parkingBoy.ParkSeveralCars(carList);
             //when
-            Car fetchedCar = parkingBoy.FetchCar(ticketList[0]);
+            Car fetchedCar = parkingBoy.FetchCar(parkMessage.TicketList[0]);
             //then
             Assert.Equal(car1, fetchedCar);
         }
@@ -109,7 +109,7 @@ namespace ParkingLotTest
         }
 
         [Fact]
-        public void Should_return_list_contains_null_when_park_2_cars_given_a_parking_lot_capicity_10_has_parked_9_cars()
+        public void Should_return_right_message_when_park_2_cars_given_a_parking_lot_capicity_10_has_parked_9_cars()
         {
             //given
             var parkingLot = new ParkingLot();
@@ -119,14 +119,23 @@ namespace ParkingLotTest
                 string carID = carIndex.ToString();
                 parkingBoy.ParkCar(new Car(carID));
             }
+
             var car10 = new Car("10");
             var car11 = new Car("11");
             var carList = new List<Car>() { car10, car11 };
             //when
-            var ticketList = parkingBoy.ParkSeveralCars(carList);
+            var parkMessage = parkingBoy.ParkSeveralCars(carList);
             //then
-            Assert.Equal(car10, parkingBoy.FetchCar(ticketList[0]));
-            Assert.Null(ticketList[1]);
+            Assert.Equal(car10, parkingBoy.FetchCar(parkMessage.TicketList[0]));
+            var expectedMessage = new ParkingSeveralCarsResponse()
+            {
+                TicketList = new List<Ticket>() { parkMessage.TicketList[0], },
+                IsAllCarsParked = false,
+                Message = "Not enough position.",
+            };
+            Assert.Equal(expectedMessage.TicketList, parkMessage.TicketList);
+            Assert.Equal(expectedMessage.IsAllCarsParked, parkMessage.IsAllCarsParked);
+            Assert.Equal(expectedMessage.Message, parkMessage.Message);
         }
 
         [Fact]

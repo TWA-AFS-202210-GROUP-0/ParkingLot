@@ -24,14 +24,11 @@ namespace ParkingLot
                 throw new NoPositionException("Not enough position.");
             }
 
-
             return ParkCarInSpecificParkingLot(car, availableParkingLot);
-
         }
 
-        public override List<Ticket> ParkSeveralCars(List<Car> carList)
+        public override ParkingSeveralCarsResponse ParkSeveralCars(List<Car> carList)
         {
-
             var ticketList = new List<Ticket>();
             foreach (Car car in carList)
             {
@@ -49,15 +46,29 @@ namespace ParkingLot
                 }
                 catch (NoPositionException e)
                 {
-                    ticketList.Add(null);
+                    return new ParkingSeveralCarsResponse()
+                    {
+                        TicketList = ticketList,
+                        IsAllCarsParked = false,
+                        Message = e.Message,
+                    };
                 }
                 catch (WrongCarException e)
                 {
-                    ticketList.Add(null);
+                    return new ParkingSeveralCarsResponse()
+                    {
+                        TicketList = ticketList,
+                        IsAllCarsParked = false,
+                        Message = e.Message,
+                    };
                 }
             }
 
-            return ticketList;
+            return new ParkingSeveralCarsResponse()
+            {
+                TicketList = ticketList,
+                IsAllCarsParked = true,
+            };
         }
     }
 }
